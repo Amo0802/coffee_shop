@@ -22,7 +22,7 @@ class LoyaltyData {
   static LoyaltyData dummy() {
     return LoyaltyData(
       userName: 'Marco',
-      pizzasBought: 4,
+      pizzasBought: 3,
       points: 730,
       resetDate: DateTime.now().add(const Duration(days: 5)),
     );

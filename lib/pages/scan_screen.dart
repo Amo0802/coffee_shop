@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ScanScreen extends StatefulWidget {
-  const ScanScreen({super.key});
+  final VoidCallback? onClose;
+  final ValueChanged<String>? onCodeScanned;
+
+  const ScanScreen({
+    super.key,
+    this.onClose,
+    this.onCodeScanned,
+  });
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
@@ -11,6 +18,7 @@ class _ScanScreenState extends State<ScanScreen>
     with SingleTickerProviderStateMixin {
   bool _isScanMode = true;
   late AnimationController _scanLineController;
+  final TextEditingController _codeController = TextEditingController();
 
   @override
   void initState() {
@@ -24,7 +32,19 @@ class _ScanScreenState extends State<ScanScreen>
   @override
   void dispose() {
     _scanLineController.dispose();
+    _codeController.dispose();
     super.dispose();
+  }
+
+  void _handleClose() {
+    widget.onClose?.call();
+  }
+
+  void _handleSubmitCode() {
+    final code = _codeController.text.trim();
+    if (code.isNotEmpty) {
+      widget.onCodeScanned?.call(code);
+    }
   }
 
   @override
@@ -48,6 +68,11 @@ class _ScanScreenState extends State<ScanScreen>
             // -- Having Trouble --
             _buildHavingTrouble(),
 
+            const SizedBox(height: 12),
+
+            // -- Done Button --
+            _buildDoneButton(),
+
             const SizedBox(height: 16),
           ],
         ),
@@ -66,9 +91,7 @@ class _ScanScreenState extends State<ScanScreen>
           Align(
             alignment: Alignment.centerLeft,
             child: GestureDetector(
-              onTap: () {
-                // TODO: close action
-              },
+              onTap: _handleClose,
               child: const Icon(
                 Icons.close,
                 color: Color(0xFF6B2FA0),
@@ -279,25 +302,21 @@ class _ScanScreenState extends State<ScanScreen>
 
     return Stack(
       children: [
-        // Top-left
         Positioned(
           top: 0, left: 0,
           child: _cornerBracket(bracketLength, bracketWidth, color,
               top: true, left: true),
         ),
-        // Top-right
         Positioned(
           top: 0, right: 0,
           child: _cornerBracket(bracketLength, bracketWidth, color,
               top: true, left: false),
         ),
-        // Bottom-left
         Positioned(
           bottom: 0, left: 0,
           child: _cornerBracket(bracketLength, bracketWidth, color,
               top: false, left: true),
         ),
-        // Bottom-right
         Positioned(
           bottom: 0, right: 0,
           child: _cornerBracket(bracketLength, bracketWidth, color,
@@ -341,6 +360,7 @@ class _ScanScreenState extends State<ScanScreen>
           ),
           const SizedBox(height: 24),
           TextField(
+            controller: _codeController,
             style: const TextStyle(color: Colors.white, fontSize: 16),
             decoration: InputDecoration(
               hintText: 'Enter code here',
@@ -362,9 +382,7 @@ class _ScanScreenState extends State<ScanScreen>
             width: double.infinity,
             height: 48,
             child: ElevatedButton(
-              onPressed: () {
-                // TODO: submit code
-              },
+              onPressed: _handleSubmitCode,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF6B2FA0),
                 shape: RoundedRectangleBorder(
@@ -415,6 +433,36 @@ class _ScanScreenState extends State<ScanScreen>
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  // ───────────────────────── DONE BUTTON ─────────────────────────
+
+  Widget _buildDoneButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: SizedBox(
+        width: double.infinity,
+        height: 48,
+        child: OutlinedButton(
+          onPressed: _handleClose,
+          style: OutlinedButton.styleFrom(
+            side: const BorderSide(color: Colors.white38, width: 1.5),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+          child: const Text(
+            'DONE',
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 15,
+              letterSpacing: 0.5,
+            ),
+          ),
         ),
       ),
     );

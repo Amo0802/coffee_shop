@@ -1,11 +1,28 @@
 import 'package:flutter/material.dart';
 
+/// Data class for a single nav bar item.
+class NavBarItem {
+  final String label;
+  final IconData icon;
+  final IconData activeIcon;
+  final bool canBeActive; // false for popup tabs (e.g. scan)
+
+  const NavBarItem({
+    required this.label,
+    required this.icon,
+    required this.activeIcon,
+    this.canBeActive = true,
+  });
+}
+
 class BottomNavBar extends StatelessWidget {
+  final List<NavBarItem> items;
   final int currentIndex;
   final ValueChanged<int>? onTap;
 
   const BottomNavBar({
     super.key,
+    required this.items,
     this.currentIndex = 0,
     this.onTap,
   });
@@ -31,29 +48,17 @@ class BottomNavBar extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _NavItem(
-            icon: Icons.home_outlined,
-            activeIcon: Icons.home_rounded,
-            label: 'Home',
-            isActive: currentIndex == 0,
-            onTap: () => onTap?.call(0),
-          ),
-          _NavItem(
-            icon: Icons.location_on_outlined,
-            activeIcon: Icons.location_on_rounded,
-            label: 'Location',
-            isActive: currentIndex == 1,
-            onTap: () => onTap?.call(1),
-          ),
-          _NavItem(
-            icon: Icons.settings_outlined,
-            activeIcon: Icons.settings_rounded,
-            label: 'Settings',
-            isActive: currentIndex == 2,
-            onTap: () => onTap?.call(2),
-          ),
-        ],
+        children: List.generate(items.length, (i) {
+          final item = items[i];
+          final isActive = item.canBeActive && currentIndex == i;
+          return _NavItem(
+            icon: item.icon,
+            activeIcon: item.activeIcon,
+            label: item.label,
+            isActive: isActive,
+            onTap: () => onTap?.call(i),
+          );
+        }),
       ),
     );
   }

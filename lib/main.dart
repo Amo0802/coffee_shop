@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page_1.dart';
-import 'pages/profile_page.dart';
-import 'pages/scan_screen.dart';
+import 'navigation/main_shell.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Inter',
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: const HomePage1(),
+      home: const MainShell(),
     );
   }
 }

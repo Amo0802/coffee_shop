@@ -5,123 +5,133 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.only(top: 60, bottom: 30),
-              decoration: const BoxDecoration(
-                color: Color(0xFF6A1B9A),
-              ),
-              child: const Center(
-                child: Text(
-                  'Hello Moa',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                  ),
+    final topPadding = MediaQuery.of(context).padding.top;
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // Header
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.only(top: topPadding + 20, bottom: 30),
+            decoration: const BoxDecoration(
+              color: Color(0xFF3B7A57),
+            ),
+            child: const Center(
+              child: Text(
+                'Hello Moa',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+          ),
 
-            // Grid
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 2,
-                crossAxisSpacing: 2,
-                childAspectRatio: 1.3,
-                children: [
-                  _buildGridTile(
-                    icon: Icons.person,
-                    label: 'PROFILE',
-                    onTap: () {},
-                  ),
-                  _buildGridTile(
-                    icon: Icons.notifications_outlined,
-                    label: 'NOTIFICATIONS',
-                    badgeCount: 2,
-                    onTap: () {},
-                  ),
-                  _buildGridTile(
-                    icon: Icons.location_on_outlined,
-                    label: 'LOCATIONS',
-                    onTap: () {},
-                  ),
-                  _buildGridTile(
-                    icon: Icons.help_outline,
-                    label: 'FAQ',
-                    onTap: () {},
-                  ),
-                ],
-              ),
-            ),
-
-            // Photo (no border, no cropping)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: double.infinity,
-                height: 200,
-                color: Colors.grey[100], // same as background
-                child: Image.asset(
-                  'assets/images/dog.png',
-                  fit: BoxFit.contain, // no cropping
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 40),
-
-            // Privacy | Terms
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+          // Grid
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              mainAxisSpacing: 2,
+              crossAxisSpacing: 2,
+              childAspectRatio: 1.3,
               children: [
-                GestureDetector(
+                _buildGridTile(
+                  icon: Icons.person,
+                  label: 'PROFILE',
                   onTap: () {},
-                  child: const Text(
-                    'Privacy Policy',
-                    style: TextStyle(
-                      color: Color(0xFF6A1B9A),
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Color(0xFF6A1B9A),
-                    ),
-                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    '|',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                ),
-                GestureDetector(
+                _buildGridTile(
+                  icon: Icons.notifications_outlined,
+                  label: 'NOTIFICATIONS',
+                  badgeCount: 2,
                   onTap: () {},
-                  child: const Text(
-                    'Terms of Use',
-                    style: TextStyle(
-                      color: Color(0xFF6A1B9A),
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Color(0xFF6A1B9A),
-                    ),
-                  ),
+                ),
+                _buildGridTile(
+                  icon: Icons.location_on_outlined,
+                  label: 'LOCATIONS',
+                  onTap: () {},
+                ),
+                _buildGridTile(
+                  icon: Icons.help_outline,
+                  label: 'FAQ',
+                  onTap: () {},
                 ),
               ],
             ),
+          ),
 
-            const SizedBox(height: 40),
-          ],
-        ),
+          // Photo
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
+              width: double.infinity,
+              height: 200,
+              child: Image.asset(
+                'assets/images/dog.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 40),
+
+          // Privacy | Terms
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {},
+                child: const Text(
+                  'Privacy Policy',
+                  style: TextStyle(
+                    color: Color(0xFF3B7A57),
+                    fontWeight: FontWeight.w600,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFF3B7A57),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  '|',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: const Text(
+                  'Terms of Use',
+                  style: TextStyle(
+                    color: Color(0xFF3B7A57),
+                    fontWeight: FontWeight.w600,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFF3B7A57),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          // Copyright
+          Text(
+            '© ${DateTime.now().year} MoaIT. All rights reserved.',
+            style: TextStyle(
+              color: Colors.black.withOpacity(0.35),
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+
+          const SizedBox(height: 40),
+        ],
       ),
     );
   }
@@ -136,7 +146,7 @@ class ProfilePage extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white.withOpacity(0.6),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Column(
@@ -153,7 +163,7 @@ class ProfilePage extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       decoration: const BoxDecoration(
-                        color: Color(0xFF6A1B9A),
+                        color: Color(0xFF3B7A57),
                         shape: BoxShape.circle,
                       ),
                       constraints: const BoxConstraints(
