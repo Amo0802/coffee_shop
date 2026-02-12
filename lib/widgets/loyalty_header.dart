@@ -23,8 +23,6 @@ class LoyaltyHeader extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, c) {
         final h = c.maxHeight;
-
-        final logoHeight = h * 0.80;      // 👈 55% of header
         final titleFont = h * 0.09;       // "Resets"
         final dateFont = h * 0.13;        // date text
 
@@ -34,7 +32,7 @@ class LoyaltyHeader extends StatelessWidget {
 
             // ── Logo (center) ──
             SizedBox(
-              height: logoHeight,
+              height: h,
               child: Image.asset(
                 logoPath,
                 fit: BoxFit.contain,

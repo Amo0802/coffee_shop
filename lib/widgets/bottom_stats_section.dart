@@ -1,50 +1,60 @@
 import 'package:flutter/material.dart';
 
-/// Bottom 20% area: left = collect image button, gap for center card, right = stat text.
+/// Bottom area: left = collect image button, center = points card, right = rewards button.
 class BottomStatsSection extends StatelessWidget {
   final double cardHeight;
   final bool canCollect;
+  final int points;
   final VoidCallback? onCollect;
+  final VoidCallback? onRewards;
 
   const BottomStatsSection({
     super.key,
     required this.cardHeight,
     required this.canCollect,
+    required this.points,
     this.onCollect,
+    this.onRewards,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // ── Left — collect image button ──
-        Expanded(
-          flex: 3,
-          child: _CollectImageButton(
-            canCollect: canCollect,
-            onCollect: onCollect,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // ── Left — collect image button ──
+          Expanded(
+            flex: 3,
+            child: _CollectImageButton(
+              canCollect: canCollect,
+              onCollect: onCollect,
+            ),
           ),
-        ),
 
-        // ── Gap for center card ──
-        const Spacer(flex: 4),
+          const SizedBox(width: 10),
 
-        // ── Right — stat text ──
-        Expanded(
-          flex: 3,
-          child: _SideStatCard(
-            value: '3,910 m',
-            label: 'mount bait fishing',
+          // ── Center — points card (stands out) ──
+          Expanded(
+            flex: 4,
+            child: _CenterPointsCard(points: points),
           ),
-        ),
-      ],
+
+          const SizedBox(width: 10),
+
+          // ── Right — rewards button ──
+          Expanded(
+            flex: 3,
+            child: _RewardsButton(onTap: onRewards),
+          ),
+        ],
+      ),
     );
   }
 }
 
-/// Collect button using pizza images.
-/// pizza1.png (colored) when available, pizza0.png (white) when not.
+/// Collect button with a frosted container background.
 class _CollectImageButton extends StatelessWidget {
   final bool canCollect;
   final VoidCallback? onCollect;
@@ -57,19 +67,38 @@ class _CollectImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imagePath = canCollect
-        ? 'assets/images/coffee1.png'
-        : 'assets/images/coffee0.png';
+        ? 'assets/images/freeCoffee1.png'
+        : 'assets/images/freeCoffee0.png';
 
-    return Container(
-      child: GestureDetector(
-        onTap: canCollect
-            ? (onCollect ?? () {/* TODO: collect free pizza */})
-            : null,
+    return GestureDetector(
+      onTap: canCollect ? (onCollect ?? () {}) : null,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.45),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.6),
+            width: 1.2,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 3),
+            ),
+            BoxShadow(
+              color: Colors.white.withOpacity(0.7),
+              blurRadius: 1,
+              spreadRadius: 0,
+              offset: const Offset(0, -1),
+            ),
+          ],
+        ),
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 300),
           opacity: canCollect ? 1.0 : 0.4,
           child: Padding(
-            padding: const EdgeInsets.all(14),
+            padding: const EdgeInsets.all(10),
             child: Image.asset(
               imagePath,
               fit: BoxFit.contain,
@@ -90,140 +119,120 @@ class _CollectImageButton extends StatelessWidget {
   }
 }
 
-/// Stat card that blends into the page background.
-class _SideStatCard extends StatelessWidget {
-  final String value;
-  final String label;
+/// Center card — shows user points, visually prominent with deeper shadow.
+class _CenterPointsCard extends StatelessWidget {
+  final int points;
 
-  const _SideStatCard({
-    required this.value,
-    required this.label,
-  });
+  const _CenterPointsCard({required this.points});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.9),
+          width: 1.2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.10),
+            blurRadius: 18,
+            offset: const Offset(0, 6),
+          ),
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 4,
+            offset: const Offset(0, 1),
+          ),
+        ],
+      ),
       alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              style: TextStyle(
-                color: Colors.black.withOpacity(0.4),
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$points',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontWeight: FontWeight.w800,
+                height: 1.1,
               ),
               maxLines: 1,
             ),
-          ),
-          const SizedBox(height: 3),
-          Text(
-            label,
-            style: TextStyle(
-              color: Colors.black.withOpacity(0.25),
-              fontSize: 7,
-              fontWeight: FontWeight.w500,
+            const SizedBox(height: 1),
+            Text(
+              'pts',
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.35),
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1.5,
+              ),
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
 
-/// Center stat card — taller & wider, overflows upward over the photo section.
-/// Positioned widget in the main page Stack.
-class CenterStatCard extends StatelessWidget {
-  final double totalHeight;
+/// Rewards button styled to match the app aesthetic with shadow.
+class _RewardsButton extends StatelessWidget {
+  final VoidCallback? onTap;
 
-  const CenterStatCard({
-    super.key,
-    required this.totalHeight,
-  });
+  const _RewardsButton({this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 0.38;
-
-    return Align(
-      alignment: Alignment.bottomCenter,
+    return GestureDetector(
+      onTap: onTap ?? () {},
       child: Container(
-        width: cardWidth,
-        height: totalHeight,
-        margin: const EdgeInsets.only(bottom: 6),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(26),
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
+              color: Colors.black.withOpacity(0.20),
+              blurRadius: 14,
+              offset: const Offset(0, 5),
+            ),
+            BoxShadow(
               color: Colors.black.withOpacity(0.08),
-              blurRadius: 16,
-              offset: const Offset(0, 4),
+              blurRadius: 4,
+              offset: const Offset(0, 1),
             ),
           ],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              const FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  '+4,423 m',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
-                  ),
-                  maxLines: 1,
-                ),
+              Icon(
+                Icons.card_giftcard_rounded,
+                color: Colors.white.withOpacity(0.9),
+                size: 22,
               ),
-
-              const SizedBox(height: 8),
-
-              // ── Animation placeholder ──
-              Expanded(
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF5F5F5),
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(
-                      color: Colors.black.withOpacity(0.05),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: Icon(
-                    Icons.auto_graph_rounded,
-                    size: 28,
-                    color: Colors.black.withOpacity(0.12),
-                  ),
-                  // TODO: Replace with your animation widget
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                'aluminium bait fishing',
+              const SizedBox(height: 4),
+              const Text(
+                'Rewards',
                 style: TextStyle(
-                  color: Colors.black.withOpacity(0.35),
-                  fontSize: 7,
-                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
                 ),
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
               ),
             ],
           ),

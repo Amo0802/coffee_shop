@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../widgets/top_section.dart';
 import '../widgets/photo_section.dart';
+import '../widgets/pizza_grid.dart';
 import '../widgets/bottom_stats_section.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../widgets/loyalty_data.dart';
@@ -76,9 +77,9 @@ class _HomePage1State extends State<HomePage1> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFF6EDE4), // soft cream
-              Color(0xFFE8D9C8), // latte
-              Color(0xFFD2B8A3), // calm light brown
+              Color(0xFFF6EDE4),
+              Color(0xFFE8D9C8),
+              Color(0xFFD2B8A3),
             ],
           ),
         ),
@@ -89,52 +90,95 @@ class _HomePage1State extends State<HomePage1> {
                 builder: (context, constraints) {
                   final screenH = constraints.maxHeight;
 
-                  final topH = screenH * 0.30;
-                  final midH = screenH * 0.50;
-                  final botH = screenH * 0.20;
-                  final overflow = botH * 0.35;
+                  final topH = screenH * 0.17;   
+                  final midH = screenH * 0.50;   
+                  final gridH = screenH * 0.18; 
+                  final botH = screenH * 0.15; 
 
-                  return Stack(
-                    clipBehavior: Clip.none,
+                  return Column(
                     children: [
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: topH,
-                            width: double.infinity,
-                            child: TopSection(
-                              topPadding: topPadding,
-                              loyaltyData: _loyaltyData,
-                            ),
-                          ),
-                          SizedBox(
-                            height: midH,
-                            width: double.infinity,
-                            child: PhotoSection(
-                              imagePaths: _images,
-                              activePageIndex: _activePageIndex,
-                              onPageIndicatorTap: _onPageSelected,
-                            ),
-                          ),
-                          SizedBox(
-                            height: botH,
-                            width: double.infinity,
-                            child: BottomStatsSection(
-                              cardHeight: botH,
-                              canCollect: _loyaltyData.canCollect,
-                              onCollect: () {
-                                // TODO: Call backend to collect reward
-                              },
-                            ),
-                          ),
-                        ],
+                      // ── Header ──
+                      SizedBox(
+                        height: topH,
+                        width: double.infinity,
+                        child: TopSection(
+                          topPadding: topPadding,
+                          loyaltyData: _loyaltyData,
+                        ),
                       ),
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: CenterStatCard(
-                          totalHeight: botH + overflow,
+
+                      // ── Photo section ──
+                      SizedBox(
+                        height: midH,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: PhotoSection(
+                            imagePaths: _images,
+                            activePageIndex: _activePageIndex,
+                            onPageIndicatorTap: _onPageSelected,
+                          ),
+                        ),
+                      ),
+
+
+                      // ── Pizza grid ──
+                      SizedBox(
+                        height: gridH,
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 6,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.45),
+                              borderRadius: BorderRadius.circular(22),
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.6),
+                                width: 1.2,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.06),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 3),
+                                ),
+                                BoxShadow(
+                                  color: Colors.white.withOpacity(0.7),
+                                  blurRadius: 1,
+                                  spreadRadius: 0,
+                                  offset: const Offset(0, -1),
+                                ),
+                              ],
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 6,
+                            ),
+                            child: PizzaGrid(
+                              pizzasBought: _loyaltyData.pizzasBought,
+                              total: _loyaltyData.totalRequired,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // ── Bottom stats ──
+                      SizedBox(
+                        height: botH,
+                        width: double.infinity,
+                        child: BottomStatsSection(
+                          cardHeight: botH,
+                          canCollect: _loyaltyData.canCollect,
+                          points: _loyaltyData.points,
+                          onCollect: () {
+                            // TODO: Call backend to collect reward
+                          },
+                          onRewards: () {
+                            // TODO: Navigate to rewards page
+                          },
                         ),
                       ),
                     ],

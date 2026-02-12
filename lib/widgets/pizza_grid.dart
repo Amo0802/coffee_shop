@@ -22,24 +22,25 @@ class PizzaGrid extends StatelessWidget {
         final h = c.maxHeight;
         final w = c.maxWidth;
 
-        final rowH = h * 0.40; // 40% + 40%
-        final gapV = h * 0.1; // 20% between rows
+        final rowH = h * 0.5; // 40% + 40%
+        // final gapV = h * 0.01; // 20% between rows
 
         // Each row has 5 pizzas. Make sure pizzas fit horizontally and vertically.
         // Horizontal max per tile = w / 5 (spaceEvenly adds spacing too, so be a bit conservative).
-        final tileSize = math.min(rowH, w / 5.4);
+        final tileSize = math.min(rowH, w / 4.4);
 
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            // SizedBox(height: gapV),
             SizedBox(
               height: rowH,
-              child: _buildRow(start: 0, count: 5, tileSize: tileSize),
+              child: _buildRow(start: 0, count: 4, tileSize: tileSize),
             ),
-            SizedBox(height: gapV),
+            // SizedBox(height: gapV),
             SizedBox(
               height: rowH,
-              child: _buildRow(start: 5, count: 5, tileSize: tileSize),
+              child: _buildRow(start: 4, count: 4, tileSize: tileSize),
             ),
           ],
         );
@@ -77,7 +78,7 @@ class PizzaGrid extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Icon(
-                    Icons.local_pizza,
+                    Icons.coffee,
                     size: tileSize * 0.45,
                     color: isBought
                         ? const Color(0xFFE8A63A)
