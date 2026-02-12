@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/home_page_1.dart';
+import 'pages/profile_page.dart';
+import 'pages/scan_screen.dart';
 
 void main() {
   runApp(const MyApp());
