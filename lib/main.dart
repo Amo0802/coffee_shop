@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'navigation/main_shell.dart';
+import 'pages/splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Inter',
         scaffoldBackgroundColor: Colors.black,
       ),
-      home: const MobileFrame(child: MainShell()),
+      home: const MobileFrame(child: SplashScreen()),
     );
   }
 }

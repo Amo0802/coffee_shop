@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
 
 class RewardItem {
   final String name;
@@ -66,10 +67,17 @@ class RewardsPage extends StatelessWidget {
   }
 
   void _showRedeemDialog(BuildContext context, RewardItem reward) {
+    final width = MobileFrame.frameWidth(context);
+
     showDialog(
       context: context,
       barrierColor: Colors.black.withValues(alpha: 0.7),
-      builder: (ctx) => _RedeemDialog(reward: reward),
+      builder: (ctx) => Center(
+        child: SizedBox(
+          width: width,
+          child: _RedeemDialog(reward: reward),
+        ),
+      ),
     );
   }
 
