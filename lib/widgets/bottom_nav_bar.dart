@@ -36,7 +36,7 @@ class BottomNavBar extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 8,
             offset: const Offset(0, -2),
           ),
@@ -81,7 +81,7 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? Colors.black : Colors.black.withOpacity(0.35);
+    final color = isActive ? Colors.black : Colors.black.withValues(alpha: 0.35);
 
     return GestureDetector(
       onTap: onTap,

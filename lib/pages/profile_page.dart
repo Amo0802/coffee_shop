@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'profile_settings_page.dart';
+import 'notifications_page.dart';
+import 'locations_page.dart';
+import 'faq_page.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
+  void _openPage(BuildContext context, Widget Function(VoidCallback close) builder) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => SizedBox(
+        height: MediaQuery.of(ctx).size.height,
+        child: builder(() => Navigator.of(ctx).pop()),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +59,35 @@ class ProfilePage extends StatelessWidget {
                 _buildGridTile(
                   icon: Icons.person,
                   label: 'PROFILE',
-                  onTap: () {},
+                  onTap: () => _openPage(
+                    context,
+                    (close) => ProfileSettingsPage(onClose: close),
+                  ),
                 ),
                 _buildGridTile(
                   icon: Icons.notifications_outlined,
                   label: 'NOTIFICATIONS',
                   badgeCount: 2,
-                  onTap: () {},
+                  onTap: () => _openPage(
+                    context,
+                    (close) => NotificationsPage(onClose: close),
+                  ),
                 ),
                 _buildGridTile(
                   icon: Icons.location_on_outlined,
                   label: 'LOCATIONS',
-                  onTap: () {},
+                  onTap: () => _openPage(
+                    context,
+                    (close) => LocationsPage(onClose: close),
+                  ),
                 ),
                 _buildGridTile(
                   icon: Icons.help_outline,
                   label: 'FAQ',
-                  onTap: () {},
+                  onTap: () => _openPage(
+                    context,
+                    (close) => FaqPage(onClose: close),
+                  ),
                 ),
               ],
             ),
@@ -124,7 +152,7 @@ class ProfilePage extends StatelessWidget {
           Text(
             '© ${DateTime.now().year} MoaIT. All rights reserved.',
             style: TextStyle(
-              color: Colors.black.withOpacity(0.35),
+              color: Colors.black.withValues(alpha: 0.35),
               fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
@@ -146,7 +174,7 @@ class ProfilePage extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.6),
+          color: Colors.white.withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(4),
         ),
         child: Column(

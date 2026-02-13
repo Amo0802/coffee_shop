@@ -28,11 +28,13 @@ class PageIndicators extends StatelessWidget {
               height: isActive ? 46 : 34,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: isActive
-                    ? Colors.white
-                    : Colors.white.withOpacity(0.25),
+                color:
+                    isActive
+                        ? Colors.white
+                        : Colors.white.withValues(alpha: 0.25),
                 border: Border.all(
-                  color: Colors.white.withOpacity(isActive ? 1 : 0.35),
+                  color: Colors.white.withValues(alpha: isActive ? 1.0 : 0.35),
+
                   width: 1.5,
                 ),
               ),

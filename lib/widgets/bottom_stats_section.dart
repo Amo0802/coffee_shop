@@ -74,20 +74,20 @@ class _CollectImageButton extends StatelessWidget {
       onTap: canCollect ? (onCollect ?? () {}) : null,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.45),
+          color: Colors.white.withValues(alpha: 0.45),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: Colors.white.withOpacity(0.6),
+            color: Colors.white.withValues(alpha: 0.6),
             width: 1.2,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.06),
+              color: Colors.black.withValues(alpha: 0.06),
               blurRadius: 12,
               offset: const Offset(0, 3),
             ),
             BoxShadow(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               blurRadius: 1,
               spreadRadius: 0,
               offset: const Offset(0, -1),
@@ -108,7 +108,7 @@ class _CollectImageButton extends StatelessWidget {
                   size: 36,
                   color: canCollect
                       ? const Color(0xFFE8A63A)
-                      : Colors.black.withOpacity(0.15),
+                      : Colors.black.withValues(alpha: 0.15),
                 );
               },
             ),
@@ -132,17 +132,17 @@ class _CenterPointsCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: Colors.white.withOpacity(0.9),
+          color: Colors.white.withValues(alpha: 0.9),
           width: 1.2,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.10),
+            color: Colors.black.withValues(alpha: 0.10),
             blurRadius: 18,
             offset: const Offset(0, 6),
           ),
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 4,
             offset: const Offset(0, 1),
           ),
@@ -170,7 +170,7 @@ class _CenterPointsCard extends StatelessWidget {
             Text(
               'pts',
               style: TextStyle(
-                color: Colors.black.withOpacity(0.35),
+                color: Colors.black.withValues(alpha: 0.35),
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 letterSpacing: 1.5,
@@ -199,12 +199,12 @@ class _RewardsButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.20),
+              color: Colors.black.withValues(alpha: 0.20),
               blurRadius: 14,
               offset: const Offset(0, 5),
             ),
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 4,
               offset: const Offset(0, 1),
             ),
@@ -220,7 +220,7 @@ class _RewardsButton extends StatelessWidget {
             children: [
               Icon(
                 Icons.card_giftcard_rounded,
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.white.withValues(alpha: 0.9),
                 size: 22,
               ),
               const SizedBox(height: 4),

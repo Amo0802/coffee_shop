@@ -72,8 +72,8 @@ class PizzaGrid extends StatelessWidget {
                 return Container(
                   decoration: BoxDecoration(
                     color: isBought
-                        ? const Color(0xFFE8A63A).withOpacity(0.2)
-                        : Colors.black.withOpacity(0.04),
+                        ? const Color(0xFFE8A63A).withValues(alpha: 0.2)
+                        : Colors.black.withValues(alpha: 0.04),
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,
@@ -82,7 +82,7 @@ class PizzaGrid extends StatelessWidget {
                     size: tileSize * 0.45,
                     color: isBought
                         ? const Color(0xFFE8A63A)
-                        : Colors.black.withOpacity(0.15),
+                        : Colors.black.withValues(alpha: 0.15),
                   ),
                 );
               },

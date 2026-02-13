@@ -41,13 +41,13 @@ class PhotoSection extends StatelessWidget {
                             Icon(
                               Icons.image_outlined,
                               size: 48,
-                              color: Colors.black.withOpacity(0.15),
+                              color: Colors.black.withValues(alpha: 0.15),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               imagePaths[index],
                               style: TextStyle(
-                                color: Colors.black.withOpacity(0.2),
+                                color: Colors.black.withValues(alpha: 0.2),
                                 fontSize: 10,
                               ),
                             ),

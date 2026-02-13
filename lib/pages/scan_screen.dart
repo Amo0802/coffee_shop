@@ -94,7 +94,7 @@ class _ScanScreenState extends State<ScanScreen>
               onTap: _handleClose,
               child: const Icon(
                 Icons.close,
-                color: Color(0xFF6B2FA0),
+                color: Color(0xFF3B7A57),
                 size: 28,
               ),
             ),
@@ -146,7 +146,7 @@ class _ScanScreenState extends State<ScanScreen>
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: isActive ? const Color(0xFF6B2FA0) : Colors.white,
+            color: isActive ? const Color(0xFF3B7A57) : Colors.white,
             borderRadius: BorderRadius.circular(6),
           ),
           alignment: Alignment.center,
@@ -371,7 +371,7 @@ class _ScanScreenState extends State<ScanScreen>
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Color(0xFF6B2FA0), width: 2),
+                borderSide: const BorderSide(color: Color(0xFF3B7A57), width: 2),
               ),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -384,7 +384,7 @@ class _ScanScreenState extends State<ScanScreen>
             child: ElevatedButton(
               onPressed: _handleSubmitCode,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF6B2FA0),
+                backgroundColor: const Color(0xFF3B7A57),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),

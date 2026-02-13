@@ -6,6 +6,7 @@ import '../widgets/photo_section.dart';
 import '../widgets/pizza_grid.dart';
 import '../widgets/bottom_stats_section.dart';
 import '../widgets/loyalty_data.dart';
+import 'rewards_page.dart';
 
 class HomePage1 extends StatefulWidget {
   const HomePage1({super.key});
@@ -54,6 +55,21 @@ class _HomePage1State extends State<HomePage1> {
     setState(() => _activePageIndex = index);
     _autoRotateTimer.cancel();
     _startAutoRotate();
+  }
+
+  void _openRewards() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => SizedBox(
+        height: MediaQuery.of(ctx).size.height,
+        child: RewardsPage(
+          userPoints: _loyaltyData.points,
+          onClose: () => Navigator.of(ctx).pop(),
+        ),
+      ),
+    );
   }
 
   @override
@@ -113,20 +129,20 @@ class _HomePage1State extends State<HomePage1> {
                 ),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.45),
+                    color: Colors.white.withValues(alpha: 0.45),
                     borderRadius: BorderRadius.circular(22),
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.6),
+                      color: Colors.white.withValues(alpha: 0.6),
                       width: 1.2,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
+                        color: Colors.black.withValues(alpha: 0.06),
                         blurRadius: 12,
                         offset: const Offset(0, 3),
                       ),
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.7),
+                        color: Colors.white.withValues(alpha: 0.7),
                         blurRadius: 1,
                         spreadRadius: 0,
                         offset: const Offset(0, -1),
@@ -156,9 +172,7 @@ class _HomePage1State extends State<HomePage1> {
                 onCollect: () {
                   // TODO: Call backend to collect reward
                 },
-                onRewards: () {
-                  // TODO: Navigate to rewards page
-                },
+                onRewards: _openRewards,
               ),
             ),
           ],
