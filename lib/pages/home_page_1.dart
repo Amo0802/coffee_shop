@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../main.dart';
 import '../widgets/top_section.dart';
 import '../widgets/photo_section.dart';
 import '../widgets/pizza_grid.dart';
@@ -58,10 +59,13 @@ class _HomePage1State extends State<HomePage1> {
   }
 
   void _openRewards() {
+    final width = MobileFrame.frameWidth(context);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      constraints: BoxConstraints(maxWidth: width),
       builder: (ctx) => SizedBox(
         height: MediaQuery.of(ctx).size.height,
         child: RewardsPage(

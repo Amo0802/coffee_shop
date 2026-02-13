@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'profile_settings_page.dart';
 import 'notifications_page.dart';
 import 'locations_page.dart';
@@ -8,10 +9,13 @@ class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   void _openPage(BuildContext context, Widget Function(VoidCallback close) builder) {
+    final width = MobileFrame.frameWidth(context);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      constraints: BoxConstraints(maxWidth: width),
       builder: (ctx) => SizedBox(
         height: MediaQuery.of(ctx).size.height,
         child: builder(() => Navigator.of(ctx).pop()),

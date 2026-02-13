@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
 import '../widgets/bottom_nav_bar.dart';
 import '../pages/home_page_1.dart';
 import '../pages/profile_page.dart';
@@ -110,10 +111,13 @@ class _MainShellState extends State<MainShell> {
   }
 
   void _openPopup(NavTab tab) {
+    final width = MobileFrame.frameWidth(context);
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      constraints: BoxConstraints(maxWidth: width),
       builder: (ctx) => SizedBox(
         height: MediaQuery.of(ctx).size.height,
         child: tab.popupBuilder!(ctx, () => Navigator.of(ctx).pop()),
