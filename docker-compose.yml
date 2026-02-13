@@ -1,0 +1,18 @@
+services:
+  app1:
+    build: .
+    image: app1-frontend:latest
+    container_name: app1-frontend
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app1.rule=Host(`app1.arminramusovic.com`)"
+      - "traefik.http.routers.app1.entrypoints=websecure"
+      - "traefik.http.routers.app1.tls.certresolver=le"
+      - "traefik.http.services.app1.loadbalancer.server.port=80"
+
+networks:
+  proxy:
+    external: true
